@@ -1,0 +1,13 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: ubuntu
+    steps:
+      - checkout
+      - run: apt-get update -y
+      - run: apt-get install git libcurl4-nss-dev libnss3 libnss3-dev clang make -y
+      - run: make
+      - store_artifacts:
+          path: ev-checker
+          destination: ev-checker
