@@ -46,6 +46,9 @@ CERTCertificate*
 DecodeBase64Cert(const std::string& base64)
 {
   size_t derLen = (base64.length() * 3) / 4;
+  if (base64.length() < 2) {
+    return nullptr;
+  }
   if (base64[base64.length() - 1] == '=') {
     derLen--;
   }
@@ -239,7 +242,6 @@ int main(int argc, char* argv[]) {
     std::cout << "// " << root->subjectName << std::endl;
     std::cout << "\"" << dottedOID << "\"," << std::endl;
     std::cout << "\"" << oidDescription << "\"," << std::endl;
-    std::cout << "SEC_OID_UNKNOWN," << std::endl;
     PrintSHA256HashOf(root->derCert);
     PrintBase64Of(root->derIssuer);
     PrintBase64Of(root->serialNumber);
